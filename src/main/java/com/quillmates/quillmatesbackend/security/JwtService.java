@@ -38,11 +38,7 @@ public class JwtService {
         this.userDetailsService = userDetailsService;
     }
 
-    public String generateToken(
-
-            String userEmail,
-            boolean isAdmin
-    ){
+    public String generateToken(String userEmail) {
 
         String jwtToken;
 
@@ -54,7 +50,6 @@ public class JwtService {
                 .setExpiration(new Date(System.currentTimeMillis()+ EXPIRATIONTIME))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS512)
                 .compact();
-
 
         return jwtToken;
     }
