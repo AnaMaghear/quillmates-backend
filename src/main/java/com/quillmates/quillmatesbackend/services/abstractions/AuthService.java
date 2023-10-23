@@ -10,5 +10,6 @@ import org.springframework.stereotype.Service;
 public interface AuthService {
 
     AuthenticationResponseDto register(RegistrationRequestDto requestDto);
+
     AuthenticationResponseDto login(LoginRequestDto requestDto);
 }

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class AuthServiceImpl implements AuthService {
+
     private final EmailValidatorService emailValidatorService;
     private final PasswordValidatorService passwordValidatorService;
     private final UserService userService;
@@ -33,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         boolean isValidPassword = passwordValidatorService.test(requestDto.getPassword());
-        if(!isValidPassword) {
+        if (!isValidPassword) {
             throw new InvalidCredentialException("password not valid, ensure at least one lowercase letter, uppercase letter and one digit, at least 8 characters and one special character");
         }
 

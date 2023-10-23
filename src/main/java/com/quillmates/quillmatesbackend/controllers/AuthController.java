@@ -1,6 +1,5 @@
 package com.quillmates.quillmatesbackend.controllers;
 
-
 import com.quillmates.quillmatesbackend.dtos.AuthenticationResponseDto;
 import com.quillmates.quillmatesbackend.dtos.LoginRequestDto;
 import com.quillmates.quillmatesbackend.dtos.RegistrationRequestDto;
@@ -14,20 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "api/v1")
+@RequestMapping(path = "api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/auth/register")
+    @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegistrationRequestDto requestDto) {
-        var authReponse = authService.register(requestDto);
+        var authResponse = authService.register(requestDto);
 
-        return new ResponseEntity<>(authReponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     }
 
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto requestDto) {
         var authResponse = authService.login(requestDto);
 

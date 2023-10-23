@@ -1,6 +1,7 @@
 package com.quillmates.quillmatesbackend.exceptions;
 
-public class UserAlreadyExistsException extends RuntimeException{
+public class UserAlreadyExistsException extends RuntimeException {
+
     public UserAlreadyExistsException() {
         super();
     }
