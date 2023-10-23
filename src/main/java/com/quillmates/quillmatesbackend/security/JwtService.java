@@ -33,8 +33,6 @@ public class JwtService {
 
     private final UserDetailsService userDetailsService;
 
-    @Value("${secret}")
-    private String secret;
 
     public JwtService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;

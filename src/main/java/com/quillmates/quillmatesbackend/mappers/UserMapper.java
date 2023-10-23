@@ -2,9 +2,6 @@ package com.quillmates.quillmatesbackend.mappers;
 
 import com.quillmates.quillmatesbackend.dtos.RegistrationRequestDto;
 import com.quillmates.quillmatesbackend.models.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 
