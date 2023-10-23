@@ -6,8 +6,10 @@ import com.quillmates.quillmatesbackend.services.abstractions.AuthService;
 import com.quillmates.quillmatesbackend.services.validators.EmailValidatorService;
 import com.quillmates.quillmatesbackend.services.validators.PasswordValidatorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
+@Service
 public class AuthServiceImpl implements AuthService {
     private final EmailValidatorService emailValidatorService;
     private final PasswordValidatorService passwordValidatorService;
@@ -21,7 +23,7 @@ public class AuthServiceImpl implements AuthService {
         }
         boolean isValidPassword = passwordValidatorService.test(requestDto.getPassword());
         if(!isValidPassword) {
-            throw new InvalidCredentialException("password not valid, ensure at least one lowercase letter, uppercase letter and one digit, at least 8 characters");
+            throw new InvalidCredentialException("password not valid, ensure at least one lowercase letter, uppercase letter and one digit, at least 8 characters and one special character");
         }
 
         if (requestDto.getUsername() == null || requestDto.getUsername().isEmpty()) {
