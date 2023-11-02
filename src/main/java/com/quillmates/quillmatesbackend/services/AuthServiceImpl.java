@@ -48,7 +48,8 @@ public class AuthServiceImpl implements AuthService {
                 requestDto.getPassword()
         ));
 
-        var jwtToken = jwtService.generateToken(requestDto.getEmail());
+        var user = userRepository.findByEmail(requestDto.getEmail()).orElseThrow(() -> new UsernameNotFoundException("Email not found."));
+        var jwtToken = jwtService.generateToken(user.getEmail(), user.getId().toString());
 
         return AuthenticationResponseDto.builder()
                 .token(jwtToken)
@@ -63,7 +64,7 @@ public class AuthServiceImpl implements AuthService {
         ));
 
         var user = userRepository.findByEmail(requestDto.getEmail()).orElseThrow(() -> new UsernameNotFoundException("Email not found."));
-        var jwtToken = jwtService.generateToken(user.getEmail());
+        var jwtToken = jwtService.generateToken(user.getEmail(), user.getId().toString());
 
         return AuthenticationResponseDto.builder()
                 .token(jwtToken)
