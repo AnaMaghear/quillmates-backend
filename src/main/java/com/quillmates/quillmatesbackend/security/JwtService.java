@@ -1,5 +1,6 @@
 package com.quillmates.quillmatesbackend.security;
 
+
 import com.quillmates.quillmatesbackend.exceptions.JwtAuthenticationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -27,23 +28,15 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "2F423F4528482B4D6250655368566D597133743677397A24432646294A404E63";
-
-    private static final long EXPIRATIONTIME = Duration.ofDays(3).toMillis();
-
+    private static final String SECRET_KEY = "2F423F4528482B4D6250655368566D597133743677397A24432646294A404E632F423F4528482B4D6250655368566D59";
+    private static final long EXPIRATIONTIME = Duration.ofDays(30).toMillis();
     private final UserDetailsService userDetailsService;
-
 
     public JwtService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
-    public String generateToken(
-
-            String userEmail,
-            boolean isAdmin
-    ){
-
+    public String generateToken(String userEmail) {
         String jwtToken;
 
         jwtToken = Jwts.builder()
@@ -51,23 +44,19 @@ public class JwtService {
                 .setHeaderParam("typ", "JWT")
                 .setSubject(userEmail)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+ EXPIRATIONTIME))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS512)
                 .compact();
-
 
         return jwtToken;
     }
 
-
     public Authentication getAuthentication(String token) throws JwtAuthenticationException {
         String username = extractUsername(token);
-
-
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
         if (isTokenValid(token, userDetails)) {
-            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("USER"))  ;
+            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("USER"));
             return new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
         } else {
             throw new JwtAuthenticationException("Invalid token");
@@ -76,22 +65,19 @@ public class JwtService {
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
-
     }
 
     public Long getUserIdFromToken(String token) {
         return extractClaim(token, claims -> claims.get("id", Long.class));
     }
 
-
-
-
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
+
         return claimsResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String token){
+    private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
@@ -105,8 +91,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyByte);
     }
 
-
-    public boolean isTokenValid(String token, UserDetails userDetails){
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
@@ -118,9 +103,4 @@ public class JwtService {
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
-
-
-
-
-
 }

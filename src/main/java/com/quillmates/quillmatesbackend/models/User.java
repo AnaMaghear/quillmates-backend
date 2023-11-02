@@ -1,6 +1,5 @@
 package com.quillmates.quillmatesbackend.models;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +18,7 @@ import java.util.UUID;
 @Builder
 @Table(name = "_user")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

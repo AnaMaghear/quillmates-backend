@@ -1,7 +1,5 @@
 package com.quillmates.quillmatesbackend.configs;
 
-
-
 import com.quillmates.quillmatesbackend.models.User;
 import com.quillmates.quillmatesbackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +22,7 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return email ->  userRepository.findByEmail(email)
+        return email -> userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
