@@ -36,15 +36,15 @@ public class JwtService {
         this.userDetailsService = userDetailsService;
     }
 
-    public String generateToken(String userEmail) {
+    public String generateToken(String userEmail, String userId) {
         String jwtToken;
 
         jwtToken = Jwts.builder()
                 .setHeaderParam("alg", "HS512")
                 .setHeaderParam("typ", "JWT")
                 .setSubject(userEmail)
+                .claim("userId", userId)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS512)
                 .compact();
 
