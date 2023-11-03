@@ -45,7 +45,6 @@ public class JwtService {
                 .setSubject(userEmail)
                 .claim("userId", userId)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS512)
                 .compact();
 
